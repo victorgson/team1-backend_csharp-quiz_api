@@ -7,8 +7,8 @@ namespace team1_backend_csharp_quiz_api.Persistance
 {
     public class QuizDatabaseContext : DbContext
     {
-        public DbSet<Answer> Answer { get; set; }
-        public DbSet<Question> Question { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Question> Questions { get; set; }
 
         public QuizDatabaseContext(DbContextOptions<QuizDatabaseContext> options) : base(options)
         {
@@ -50,19 +50,41 @@ namespace team1_backend_csharp_quiz_api.Persistance
 
         private void CreateAnswerModel(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Answer>(entity =>
+            //{
+            
+            //    entity.HasKey(e => e.Id);
+            //    entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            //    //entity.Property(e => e.QuestionId).IsRequired();
+            //    entity.HasOne<Question>().WithOne().HasForeignKey(p => p.)
+            
+      
+           
+            //});
+
             modelBuilder.Entity<Answer>()
-                .HasIndex(answer => answer.AnswerString)
-            .IsUnique(false);
-            //modelBuilder.Entity<Answer>()
-            //    .HasOne<Role>(person => person.Role);
+      
+                .HasOne<Question>()
+                .WithMany()
+                .HasForeignKey(a => a.QuestionId);
 
         }
 
         private void CreateQuestionModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Question>()
-                .HasIndex(question => question.QuestionString)
-                .IsUnique(true);
+            modelBuilder.Entity<Question>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.HasIndex(q => q.Id).IsUnique(true);
+
+                
+          
+                // .HasIndex(question => question.QuestionString)
+                //.IsUnique(true);
+            });
+                
+               
         }
     }
 }

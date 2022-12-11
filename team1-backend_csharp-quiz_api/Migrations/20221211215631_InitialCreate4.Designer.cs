@@ -11,8 +11,8 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    [Migration("20221209145039_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221211215631_InitialCreate4")]
+    partial class InitialCreate4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,17 @@ namespace team1backendcsharpquizapi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("isCorrectAnswer")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnswerString");
+                    b.HasIndex("QuestionId");
 
-                    b.ToTable("Answer");
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Question", b =>
@@ -60,10 +63,19 @@ namespace team1backendcsharpquizapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionString")
+                    b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Answer", b =>
+                {
+                    b.HasOne("team1_backend_csharp_quiz_api.Entities.Question", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
