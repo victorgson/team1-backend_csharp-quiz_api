@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using team1_backend_csharp_quiz_api.Persistance;
+using team1_backend_csharp_quiz_api.Domain;
+using team1_backend_csharp_quiz_api.Infrastructure.Repository;
 
 
 internal class Program
@@ -27,9 +29,9 @@ internal class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<ITriviaQuizRepository, TriviaQuizRepository>();
 
 
-     
         //// Configure the HTTP request pipeline.
         //if (app.Environment.IsDevelopment())
         //{

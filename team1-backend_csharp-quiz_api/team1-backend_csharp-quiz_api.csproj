@@ -40,6 +40,11 @@
     <None Remove="Services\" />
     <None Remove="Migrations\" />
     <None Remove="Microsoft.EntityFrameworkCore.Abstractions" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Infrastructure\Clients\" />
+    <None Remove="Infrastructure\Repository\" />
+    <None Remove="Domain\" />
+    <None Remove="Infrastructure\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -48,5 +53,10 @@
     <Folder Include="Controllers\V2\" />
     <Folder Include="Services\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Clients\" />
+    <Folder Include="Infrastructure\Repository\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Infrastructure\Models\" />
   </ItemGroup>
 </Project>

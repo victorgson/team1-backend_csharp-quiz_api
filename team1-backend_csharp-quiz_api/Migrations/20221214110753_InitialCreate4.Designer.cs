@@ -11,7 +11,7 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    [Migration("20221211215631_InitialCreate4")]
+    [Migration("20221214110753_InitialCreate4")]
     partial class InitialCreate4
     {
         /// <inheritdoc />
