@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
-using team1_backend_csharp_quiz_api.Domain;
+using team1_backend_csharp_quiz_api.Contracts;
 
 namespace team1_backend_csharp_quiz_api.V1;
 

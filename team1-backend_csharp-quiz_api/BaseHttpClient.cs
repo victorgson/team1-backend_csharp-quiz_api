@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace team1_backend_csharp_quiz_api.Infrastructure.Clients;
+namespace team1_backend_csharp_quiz_api;
 
 public abstract class BaseHttpClient
 {

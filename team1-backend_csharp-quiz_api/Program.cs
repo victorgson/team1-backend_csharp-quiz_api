@@ -10,8 +10,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using team1_backend_csharp_quiz_api.Persistance;
-using team1_backend_csharp_quiz_api.Domain;
-using team1_backend_csharp_quiz_api.Infrastructure.Repository;
+using team1_backend_csharp_quiz_api.Contracts;
+using team1_backend_csharp_quiz_api.Repository;
 
 
 internal class Program

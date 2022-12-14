@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace team1_backend_csharp_quiz_api.Infrastructure.Models;
+namespace team1_backend_csharp_quiz_api.Entities;
 
 public class TriviaQuizQuestion
 {

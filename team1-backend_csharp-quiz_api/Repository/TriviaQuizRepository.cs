@@ -1,8 +1,8 @@
-﻿using team1_backend_csharp_quiz_api.Domain;
-using team1_backend_csharp_quiz_api.Infrastructure.Models;
+﻿using team1_backend_csharp_quiz_api.Contracts;
+using team1_backend_csharp_quiz_api.Entities;
 using System.Text.Json;
 
-namespace team1_backend_csharp_quiz_api.Infrastructure.Repository { 
+namespace team1_backend_csharp_quiz_api.Repository { 
 
     public class TriviaQuizRepository : ITriviaQuizRepository
     {
