@@ -24,9 +24,11 @@ namespace team1_backend_csharp_quiz_api.Services
 			using (var context = new QuizDatabaseContext())
 			{
 
-				//Fixa till random
-				var question = context.Questions.FirstOrDefault();
-                context.SaveChanges();
+                Random r = new Random();
+    
+                var tableToList = context.Questions.ToList();
+                var question = tableToList.ElementAt(r.Next(0, tableToList.Count()));
+
                 return question;
 
             }
