@@ -11,14 +11,14 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    [Migration("20221214110753_InitialCreate4")]
-    partial class InitialCreate4
+    [Migration("20221215215443_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
 
             modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Answer", b =>
                 {
@@ -30,15 +30,13 @@ namespace team1backendcsharpquizapi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("isCorrectAnswer")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -63,19 +61,7 @@ namespace team1backendcsharpquizapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Answer", b =>
-                {
-                    b.HasOne("team1_backend_csharp_quiz_api.Entities.Question", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -31,7 +31,7 @@ namespace team1_backend_csharp_quiz_api.Persistance
         {
             base.OnModelCreating(modelBuilder);
             CreateAnswerModel(modelBuilder);
-            CreateQuestionModel(modelBuilder);
+            //CreateQuestionModel(modelBuilder);
         }
 
         //exempel
@@ -62,27 +62,31 @@ namespace team1_backend_csharp_quiz_api.Persistance
            
             //});
 
-            modelBuilder.Entity<Answer>()
+
+            // KOmmenterat ut dessa två metoder - erik 
+
+
+        //    modelBuilder.Entity<Answer>()
       
-                .HasOne<Question>()
-                .WithMany()
-                .HasForeignKey(a => a.QuestionId);
+        //        .HasOne<Question>()
+        //        .WithMany()
+        //        .HasForeignKey(a => a.QuestionId);
 
-        }
+        //}
 
-        private void CreateQuestionModel(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Question>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.HasIndex(q => q.Id).IsUnique(true);
+        //private void CreateQuestionModel(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Question>(entity =>
+        //    {
+        //        entity.HasKey(e => e.Id);
+        //        entity.Property(e => e.Id).ValueGeneratedOnAdd();
+        //        entity.HasIndex(q => q.Id).IsUnique(true);
 
                 
           
-                // .HasIndex(question => question.QuestionString)
-                //.IsUnique(true);
-            });
+        //        // .HasIndex(question => question.QuestionString)
+        //        //.IsUnique(true);
+        //    });
                 
                
         }
