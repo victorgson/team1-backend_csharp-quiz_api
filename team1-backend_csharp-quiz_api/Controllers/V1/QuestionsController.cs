@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.Entities;
 using team1_backend_csharp_quiz_api.Persistance;
+using team1_backend_csharp_quiz_api.Repository;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
@@ -18,39 +20,53 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     public class QuestionsController : ControllerBase
     {
         private readonly QuizDatabaseContext _context;
+        private readonly IQuestionsRepository _repository;
 
-        public QuestionsController(QuizDatabaseContext context)
+        public QuestionsController(QuizDatabaseContext context, IQuestionsRepository repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         // GET: api/Questions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
         {
-          if (_context.Questions == null)
-          {
-              return NotFound();
-          }
-            return await _context.Questions.ToListAsync();
+
+            var questions = await _repository.GetAllAsync();
+
+            return Ok(questions);
         }
 
         // GET: api/Questions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Question>> GetQuestion(Guid id)
         {
-          if (_context.Questions == null)
-          {
-              return NotFound();
-          }
-            var question = await _context.Questions.FindAsync(id);
 
-            if (question == null)
+
+            var question = await _repository.GetAsync(id);
+
+            if (question is null)
             {
-                return NotFound();
+                return NotFound(); 
             }
 
-            return question;
+            return Ok(question);
+
+            // Gamla sättet... 
+
+          //if (_context.Questions == null)
+          //{
+          //    return NotFound();
+          //}
+          //  var question = await _context.Questions.FindAsync(id);
+
+                //  if (question == null)
+                //  {
+                //      return NotFound();
+                //  }
+
+                //  return question;
         }
 
         // PUT: api/Questions/5
@@ -63,15 +79,20 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
                 return BadRequest();
             }
 
-            _context.Entry(question).State = EntityState.Modified;
+            var questionToEdit = await _repository.GetAsync(id);
+
+            if (questionToEdit is null)
+            {
+                return NotFound(); 
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.UpdateAsync(questionToEdit);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!QuestionExists(id))
+                if (! await QuestionExists(id))
                 {
                     return NotFound();
                 }
@@ -89,12 +110,8 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<Question>> PostQuestion(Question question)
         {
-          if (_context.Questions == null)
-          {
-              return Problem("Entity set 'QuizDatabaseContext.Questions'  is null.");
-          }
-            _context.Questions.Add(question);
-            await _context.SaveChangesAsync();
+
+            await _repository.AddSync(question);
 
             return CreatedAtAction("GetQuestion", new { id = question.Id }, question);
         }
@@ -103,25 +120,24 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuestion(Guid id)
         {
-            if (_context.Questions == null)
+
+            var question = await _repository.GetAsync(id);
+            if (question is null)
             {
-                return NotFound();
-            }
-            var question = await _context.Questions.FindAsync(id);
-            if (question == null)
-            {
-                return NotFound();
+                return NotFound(); 
             }
 
-            _context.Questions.Remove(question);
-            await _context.SaveChangesAsync();
+            await _repository.DeleteAsync(id);
 
-            return NoContent();
+
+            return NoContent(); 
+
+
         }
 
-        private bool QuestionExists(Guid id)
+        private async Task<bool> QuestionExists(Guid id)
         {
-            return (_context.Questions?.Any(e => e.Id == id)).GetValueOrDefault();
+            return await _repository.Exists(id);
         }
     }
 }

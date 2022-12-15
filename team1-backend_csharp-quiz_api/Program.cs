@@ -30,6 +30,9 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<ITriviaQuizRepository, TriviaQuizRepository>();
+        builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+        builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
 
 
         //// Configure the HTTP request pipeline.
