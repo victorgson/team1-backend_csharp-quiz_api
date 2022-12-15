@@ -35,8 +35,6 @@ namespace team1backendcsharpquizapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
-
                     b.ToTable("Answers");
                 });
 
@@ -58,21 +56,13 @@ namespace team1backendcsharpquizapi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("triviaId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Answer", b =>
-                {
-                    b.HasOne("team1_backend_csharp_quiz_api.Entities.Question", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

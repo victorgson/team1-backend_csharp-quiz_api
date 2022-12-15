@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using team1_backend_csharp_quiz_api.Entities;
 using team1_backend_csharp_quiz_api.Persistance;
 using team1_backend_csharp_quiz_api.Services;
+using team1_backend_csharp_quiz_api.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,9 +25,68 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpGet]
         public Question GetRandomQuestion()
         {
-            var questionService = new QuestionService();
-            return questionService.GetRandomQuestion();
+            // Do random, 0 - 10
+
+            Random r = new Random();
+            var number = r.Next(0, 10);
+       
+            if(number >= 5)
+            {
+                var questionService = new QuestionService();
+                return questionService.GetRandomQuestion();
+                // Get question from DB or 
+            } else
+            {
+                var triviaRepository = new TriviaQuizRepository();
+                TriviaQuizQuestion triviaQuestion = triviaRepository.GetTriviaQuestion().Result;
+                Question question = new Question();
+                question.QuestionString = triviaQuestion.question;
+                question.triviaId = triviaQuestion.triviaId;
+                question.Language = "en";
+                question.Category = "N/A";
+
+                Answer answer = new Answer();
+
+                answer.AnswerString = triviaQuestion.correctAnswer;
+                answer.QuestionId = question.Id;
+                answer.isCorrectAnswer = true;
+   
+                var questionService = new QuestionService();
+                var answerService = new AnswerService();
+
+
+                // check if question exists
+                if(questionService.checkIfTriviaQuestionExists(triviaQuestion.triviaId))
+                {
+                    // get question by triviaId if exists
+                    return questionService.getTriviaQuestionIfExists(triviaQuestion.triviaId);
+                } else
+                {
+                    // Save question if not exists
+                    questionService.AddQuestion(question);
+                    answerService.AddAnswer(answer);
+
+                    // Saves all incorrect answers
+                    foreach (var i in triviaQuestion.incorrectAnswers)
+                    {
+                        var wrongAnswer = new Answer();
+                        wrongAnswer.AnswerString = i;
+                        wrongAnswer.isCorrectAnswer = false;
+                        wrongAnswer.QuestionId = question.Id;
+                        answerService.AddAnswer(wrongAnswer);
+                    }
+                }
+                return question;
+
+            }
+
+            // Check if question exists in DB
+  
+
+
+          
         }
+
 
         // GET api/values/5
         [HttpGet("{id}")]

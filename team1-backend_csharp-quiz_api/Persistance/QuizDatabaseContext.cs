@@ -52,21 +52,21 @@ namespace team1_backend_csharp_quiz_api.Persistance
         {
             //modelBuilder.Entity<Answer>(entity =>
             //{
-            
+
             //    entity.HasKey(e => e.Id);
             //    entity.Property(e => e.Id).ValueGeneratedOnAdd();
             //    //entity.Property(e => e.QuestionId).IsRequired();
             //    entity.HasOne<Question>().WithOne().HasForeignKey(p => p.)
-            
-      
-           
+
+
+
             //});
 
             modelBuilder.Entity<Answer>()
-      
-                .HasOne<Question>()
-                .WithMany()
-                .HasForeignKey(a => a.QuestionId);
+                .HasKey(e => e.Id);
+                //.HasOne<Question>()
+                //.WithMany()
+                //.HasForeignKey(a => a.QuestionId);
 
         }
 
@@ -76,7 +76,7 @@ namespace team1_backend_csharp_quiz_api.Persistance
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.HasIndex(q => q.Id).IsUnique(true);
+                //entity.HasIndex(q => q.Id).IsUnique(true);
 
                 
           

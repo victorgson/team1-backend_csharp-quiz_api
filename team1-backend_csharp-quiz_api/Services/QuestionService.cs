@@ -19,17 +19,19 @@ namespace team1_backend_csharp_quiz_api.Services
 			}
 		}
 
+
+
 		public Question GetRandomQuestion()
 		{
-			using (var context = new QuizDatabaseContext())
-			{
+            using (var context = new QuizDatabaseContext())
+            {
 
+       
                 Random r = new Random();
-    
-                var tableToList = context.Questions.ToList();
-                var question = tableToList.ElementAt(r.Next(0, tableToList.Count()));
 
-                return question;
+                    var tableToList = context.Questions.ToList();
+                    var question = tableToList.ElementAt(r.Next(0, tableToList.Count()));
+                    return question;
 
             }
 		}
@@ -40,6 +42,28 @@ namespace team1_backend_csharp_quiz_api.Services
             {
 				var question = context.Questions.Where(q => q.Id == id).First();
                 context.SaveChanges();
+                return question;
+
+            }
+        }
+
+        public bool checkIfTriviaQuestionExists(String id)
+        {
+            using (var context = new QuizDatabaseContext())
+            {
+                if (context.Questions.Where(q => q.triviaId == id).Count() == 0) {
+                    return false;
+                }
+                return true;
+
+            }
+        }
+
+        public Question getTriviaQuestionIfExists(String id)
+        {
+            using (var context = new QuizDatabaseContext())
+            {
+                var question = context.Questions.Where(q => q.triviaId == id).First();
                 return question;
 
             }

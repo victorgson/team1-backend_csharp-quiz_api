@@ -7,6 +7,7 @@ namespace team1_backend_csharp_quiz_api.Entities
         public Guid QuestionId { get; set; }
         public string AnswerString { get; set; }
         public bool isCorrectAnswer { get; set; }
+        //public virtual List<string> answers { get; set; }
 
     }
 }
