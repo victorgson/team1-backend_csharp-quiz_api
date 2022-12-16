@@ -48,43 +48,95 @@ namespace team1_backend_csharp_quiz_api.Persistance
         //    });
         //}
 
+
+
+
         private void CreateAnswerModel(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Answer>(entity =>
-            //{
-            
-            //    entity.HasKey(e => e.Id);
-            //    entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            //    //entity.Property(e => e.QuestionId).IsRequired();
-            //    entity.HasOne<Question>().WithOne().HasForeignKey(p => p.)
-            
-      
-           
-            //});
+            modelBuilder.Entity<Answer>(entity =>
+            {
 
-            modelBuilder.Entity<Answer>()
-      
-                .HasOne<Question>()
-                .WithMany()
-                .HasForeignKey(a => a.QuestionId);
+
+                //entity.HasData(
+                //    new Answer
+                //    {
+
+                //    }
+
+                //    )
+
+
+                //entity.HasKey(e => e.Id);
+                //entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                ////entity.Property(e => e.QuestionId).IsRequired();
+                //entity.HasOne<Question>().WithOne().HasForeignKey(p => p);
+
+
+
+
+            });
 
         }
+
+
+            // KOmmenterat ut dessa två metoder - erik 
+
+
+            //    modelBuilder.Entity<Answer>()
+
+            //        .HasOne<Question>()
+            //        .WithMany()
+            //        .HasForeignKey(a => a.QuestionId);
+
+            //}
+
+            //private void CreateQuestionModel(ModelBuilder modelBuilder)
+            //{
+
+            //    modelBuilder.Entity<Question>(entity =>
+            //    {
+            //        entity.HasData(
+            //            )
+            //    })
+                //modelBuilder.Entity<Question>(entity =>
+                //{
+                //    entity.HasKey(e => e.Id);
+                //    entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                //    entity.HasIndex(q => q.Id).IsUnique(true);
+
+
+
+                    // .HasIndex(question => question.QuestionString)
+                    //.IsUnique(true);
+                //});
 
         private void CreateQuestionModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Question>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.HasIndex(q => q.Id).IsUnique(true);
-
-                
-          
-                // .HasIndex(question => question.QuestionString)
-                //.IsUnique(true);
+                entity.HasData(
+                    new Question
+                    {
+                        Language = "Swedish",
+                        QuestionString = "Fråga 1",
+                        Category = "Sport"
+                    },
+                    new Question
+                    {
+                        Language = "Swedish",
+                        QuestionString = "Fråga 2",
+                        Category = "Film"
+                    },
+                    new Question
+                    {
+                        Language = "Swedish",
+                        QuestionString = "Fråga 3",
+                        Category = "Serier"
+                    }
+                    );
             });
-                
-               
         }
+
+            
     }
 }
