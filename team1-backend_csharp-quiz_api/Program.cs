@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 using team1_backend_csharp_quiz_api.Persistance;
 using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.Repository;
-
+using team1_backend_csharp_quiz_api.Configurations;
 
 internal class Program
 {
@@ -47,6 +47,9 @@ internal class Program
         ConfigureSwagger(builder.Services);
 
         builder.Services.AddResponseCompression();
+
+        builder.Services.AddAutoMapper(typeof(MapperConfig));
+
         var app = builder.Build();
         app = ConfigureAppBuilder(app);
         app.Run();

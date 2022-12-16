@@ -9,6 +9,9 @@ using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.Entities;
 using team1_backend_csharp_quiz_api.Persistance;
 using team1_backend_csharp_quiz_api.Repository;
+using AutoMapper;
+using team1_backend_csharp_quiz_api.DTO;
+using team1_backend_csharp_quiz_api.DTO.Question;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
@@ -21,21 +24,24 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     {
         private readonly QuizDatabaseContext _context;
         private readonly IQuestionsRepository _repository;
+        private readonly IMapper _mapper;
 
-        public QuestionsController(QuizDatabaseContext context, IQuestionsRepository repository)
+        public QuestionsController(QuizDatabaseContext context, IQuestionsRepository repository, IMapper mapper)
         {
             _context = context;
             _repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/Questions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
+        public async Task<ActionResult<IEnumerable<GetQuestionDto>>> GetQuestions()
         {
 
             var questions = await _repository.GetAllAsync();
+            var records = _mapper.Map<List<GetQuestionDto>>(questions);
 
-            return Ok(questions);
+            return Ok(records);
         }
 
         // GET: api/Questions/5
@@ -72,23 +78,23 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         // PUT: api/Questions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutQuestion(Guid id, Question question)
+        public async Task<IActionResult> PutQuestion(Guid id, UpdateQuestionDto questionDto)
         {
-            if (id != question.Id)
+            if (id != questionDto.Id)
             {
                 return BadRequest();
             }
 
-            var questionToEdit = await _repository.GetAsync(id);
+            var question = await _repository.GetAsync(id);
 
-            if (questionToEdit is null)
+            if (question is null)
             {
                 return NotFound(); 
             }
-
+            _mapper.Map(questionDto, question);
             try
             {
-                await _repository.UpdateAsync(questionToEdit);
+                await _repository.UpdateAsync(question);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -108,9 +114,10 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         // POST: api/Questions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Question>> PostQuestion(Question question)
+        public async Task<ActionResult<Question>> PostQuestion(CreateQuestionDto createQuestionDto)
         {
 
+            var question = _mapper.Map<Question>(createQuestionDto);
             await _repository.AddSync(question);
 
             return CreatedAtAction("GetQuestion", new { id = question.Id }, question);

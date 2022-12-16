@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,11 @@
     <None Remove="Contracts\" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="DTO\" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Configurations\" />
+    <None Remove="DTO\Question\" />
+    <None Remove="DTO\Answer\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -54,6 +60,10 @@
     <Folder Include="Services\" />
     <Folder Include="Repository\" />
     <Folder Include="Contracts\" />
+    <Folder Include="DTO\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="DTO\Question\" />
+    <Folder Include="DTO\Answer\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\AnswersController.cs" />
