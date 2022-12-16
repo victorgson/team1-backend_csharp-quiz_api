@@ -19,13 +19,12 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     [ApiExplorerSettings(GroupName = "v1")]
     [ApiController]
 
-    // Behöver en GetRandomQuestion-Metod? Eller kanske bör vara i ett repo, som hanterar både egen databas och trivia? 
     public class QuestionsController : ControllerBase
     {
         private readonly IQuestionsRepository _repository;
         private readonly IMapper _mapper;
 
-        public QuestionsController(QuizDatabaseContext context, IQuestionsRepository repository, IMapper mapper)
+        public QuestionsController(IQuestionsRepository repository, IMapper mapper)
         {
 
             _repository = repository;
@@ -64,8 +63,6 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [Route("/api/v1/Questions/Random")]
         public async Task<ActionResult<Question>> GetRandomQuestion()
         {
-
-
             var question = await _repository.GetRandomAsync();
 
             if (question is null)

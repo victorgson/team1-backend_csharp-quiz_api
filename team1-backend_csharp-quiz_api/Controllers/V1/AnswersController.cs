@@ -5,8 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using team1_backend_csharp_quiz_api.DTO.Answer;
 using team1_backend_csharp_quiz_api.Entities;
 using team1_backend_csharp_quiz_api.Persistance;
+using AutoMapper;
+using team1_backend_csharp_quiz_api.Repository;
+using team1_backend_csharp_quiz_api.Contracts;
+using team1_backend_csharp_quiz_api.DTO.Question;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
@@ -15,61 +20,64 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     [ApiController]
     public class AnswersController : ControllerBase
     {
-        private readonly QuizDatabaseContext _context;
+     
+        private readonly IMapper _mapper;
+        private readonly IAnswersRepository _repository;
 
-        public AnswersController(QuizDatabaseContext context)
+        public AnswersController(IMapper mapper, IAnswersRepository repository)
         {
-            _context = context;
+            this._mapper = mapper;
+            this._repository = repository;
         }
 
         // GET: api/Answers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers()
         {
-          if (_context.Answers == null)
-          {
-              return NotFound();
-          }
-            return await _context.Answers.ToListAsync();
+            var answers = await _repository.GetAllAsync();
+            var records = _mapper.Map<List<GetAnswerDto>>(answers);
+
+            return Ok(records);
         }
 
         // GET: api/Answers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Answer>> GetAnswer(Guid id)
         {
-          if (_context.Answers == null)
-          {
-              return NotFound();
-          }
-            var answer = await _context.Answers.FindAsync(id);
+            var answer = await _repository.GetAsync(id);
 
-            if (answer == null)
+            if (answer is null)
             {
                 return NotFound();
             }
 
-            return answer;
+            return Ok(answer);
         }
 
         // PUT: api/Answers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnswer(Guid id, Answer answer)
+        public async Task<IActionResult> PutAnswer(Guid id, UpdateAnswerDto answerDto)
         {
-            if (id != answer.Id)
+            if (id != answerDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(answer).State = EntityState.Modified;
+            var question = await _repository.GetAsync(id);
 
+            if (question is null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(answerDto, question);
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.UpdateAsync(question);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnswerExists(id))
+                if (!await AnswerExists(id))
                 {
                     return NotFound();
                 }
@@ -85,14 +93,10 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         // POST: api/Answers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
+        public async Task<ActionResult<Answer>> PostAnswer(CreateAnswerDto createAnswerDto)
         {
-          if (_context.Answers == null)
-          {
-              return Problem("Entity set 'QuizDatabaseContext.Answers'  is null.");
-          }
-            _context.Answers.Add(answer);
-            await _context.SaveChangesAsync();
+            var answer = _mapper.Map<Answer>(createAnswerDto);
+            await _repository.AddSync(answer);
 
             return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
         }
@@ -101,25 +105,21 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(Guid id)
         {
-            if (_context.Answers == null)
-            {
-                return NotFound();
-            }
-            var answer = await _context.Answers.FindAsync(id);
-            if (answer == null)
+            var answer = await _repository.GetAsync(id);
+            if (answer is null)
             {
                 return NotFound();
             }
 
-            _context.Answers.Remove(answer);
-            await _context.SaveChangesAsync();
+            await _repository.DeleteAsync(id);
+
 
             return NoContent();
         }
 
-        private bool AnswerExists(Guid id)
+        private async Task<bool> AnswerExists(Guid id)
         {
-            return (_context.Answers?.Any(e => e.Id == id)).GetValueOrDefault();
+            return await _repository.Exists(id);
         }
     }
 }
