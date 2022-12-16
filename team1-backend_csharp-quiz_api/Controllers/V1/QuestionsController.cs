@@ -22,13 +22,12 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     // Behöver en GetRandomQuestion-Metod? Eller kanske bör vara i ett repo, som hanterar både egen databas och trivia? 
     public class QuestionsController : ControllerBase
     {
-        private readonly QuizDatabaseContext _context;
         private readonly IQuestionsRepository _repository;
         private readonly IMapper _mapper;
 
         public QuestionsController(QuizDatabaseContext context, IQuestionsRepository repository, IMapper mapper)
         {
-            _context = context;
+
             _repository = repository;
             this._mapper = mapper;
         }
@@ -44,7 +43,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
             return Ok(records);
         }
 
-        // GET: api/Questions/5
+        //GET: api/Questions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Question>> GetQuestion(Guid id)
         {
@@ -54,25 +53,27 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
 
             if (question is null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             return Ok(question);
+        }
 
-            // Gamla sättet... 
+        // GET: api/Questions/
+        [HttpGet]
+        [Route("/api/v1/Questions/Random")]
+        public async Task<ActionResult<Question>> GetRandomQuestion()
+        {
 
-          //if (_context.Questions == null)
-          //{
-          //    return NotFound();
-          //}
-          //  var question = await _context.Questions.FindAsync(id);
 
-                //  if (question == null)
-                //  {
-                //      return NotFound();
-                //  }
+            var question = await _repository.GetRandomAsync();
 
-                //  return question;
+            if (question is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(question);
         }
 
         // PUT: api/Questions/5
