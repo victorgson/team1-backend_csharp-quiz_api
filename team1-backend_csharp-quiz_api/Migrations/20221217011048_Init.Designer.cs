@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using team1_backend_csharp_quiz_api.Persistance;
 
@@ -10,9 +11,11 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    partial class QuizDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221217011048_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");

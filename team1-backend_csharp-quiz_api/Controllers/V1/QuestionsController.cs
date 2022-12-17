@@ -12,6 +12,7 @@ using team1_backend_csharp_quiz_api.Repository;
 using AutoMapper;
 using team1_backend_csharp_quiz_api.DTO;
 using team1_backend_csharp_quiz_api.DTO.Question;
+using team1_backend_csharp_quiz_api.Services;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
@@ -23,10 +24,11 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     {
         private readonly IQuestionsRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ITriviaService _service;
 
-        public QuestionsController(IQuestionsRepository repository, IMapper mapper)
+        public QuestionsController(IQuestionsRepository repository, IMapper mapper, ITriviaService service)
         {
-
+            this._service = service;
             _repository = repository;
             this._mapper = mapper;
         }
@@ -50,6 +52,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
 
             var question = await _repository.GetAsync(id);
 
+
             if (question is null)
             {
                 return NotFound();
@@ -63,13 +66,13 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [Route("/api/v1/Questions/Random")]
         public async Task<ActionResult<Question>> GetRandomQuestion()
         {
-            var question = await _repository.GetRandomAsync();
+            //var question = await _repository.GetRandomAsync();
+            var question = await _service.GetRandomQuestion();
 
             if (question is null)
             {
                 return NotFound();
             }
-
             return Ok(question);
         }
 

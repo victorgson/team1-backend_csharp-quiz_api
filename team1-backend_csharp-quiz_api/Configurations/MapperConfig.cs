@@ -18,6 +18,7 @@ namespace team1_backend_csharp_quiz_api.Configurations
             CreateMap<Answer, GetAnswerDto>().ReverseMap();
             CreateMap<Answer, CreateAnswerDto>().ReverseMap();
             CreateMap<Answer, UpdateAnswerDto>().ReverseMap();
+            CreateMap<TriviaQuizQuestion, Question>().ReverseMap();
 
         }
 	}
