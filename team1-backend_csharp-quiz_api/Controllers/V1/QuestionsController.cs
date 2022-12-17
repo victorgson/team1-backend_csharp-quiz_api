@@ -66,7 +66,6 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [Route("/api/v1/Questions/Random")]
         public async Task<ActionResult<Question>> GetRandomQuestion()
         {
-            //var question = await _repository.GetRandomAsync();
             var question = await _service.GetRandomQuestion();
 
             if (question is null)

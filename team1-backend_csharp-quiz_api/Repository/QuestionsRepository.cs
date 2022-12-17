@@ -14,8 +14,6 @@ namespace team1_backend_csharp_quiz_api.Repository
             this._context = context;
         }
 
-       
-
         public async Task<Question> GetRandomAsync()
         {
             Random r = new Random();

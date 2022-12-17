@@ -24,13 +24,11 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
      
         private readonly IMapper _mapper;
         private readonly IAnswersRepository _repository;
-        //private readonly TriviaQuizLogicService _triviaService;
 
         public AnswersController(IMapper mapper, IAnswersRepository repository)
         {
             this._mapper = mapper;
             this._repository = repository;
-            //this._triviaService = triviaService;
         }
 
         // GET: api/Answers
