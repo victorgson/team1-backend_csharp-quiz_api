@@ -8,6 +8,8 @@ namespace team1_backend_csharp_quiz_api.Contracts
 
         Task<Question> GetRandomAsync();
 
+        Task<List<Question>> GetAllQuestions();
+
     }
 }
 
