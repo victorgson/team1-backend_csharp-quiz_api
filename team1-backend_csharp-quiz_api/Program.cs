@@ -13,7 +13,7 @@ using team1_backend_csharp_quiz_api.Persistance;
 using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.Repository;
 using team1_backend_csharp_quiz_api.Configurations;
-
+using team1_backend_csharp_quiz_api.Services;
 internal class Program
 {
     private static void Main(string[] args)
@@ -33,6 +33,7 @@ internal class Program
         builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
         builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
+        builder.Services.AddScoped<ITriviaService, TriviaService>();
 
 
         //// Configure the HTTP request pipeline.
