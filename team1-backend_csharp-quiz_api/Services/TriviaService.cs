@@ -24,11 +24,12 @@ namespace team1_backend_csharp_quiz_api.Services
         private readonly ITriviaQuizRepository _triviaRepository;
         private readonly IQuestionsRepository _questionRepository;
         private readonly IMapper _mapper;
+        private readonly IQuestionService _questionService;
 
-
-        public TriviaService(IAnswersRepository answerRepository, ITriviaQuizRepository triviaRepository, IQuestionsRepository questionsRepository, IMapper mapper)
+        public TriviaService(IAnswersRepository answerRepository, ITriviaQuizRepository triviaRepository, IQuestionsRepository questionsRepository, IMapper mapper, IQuestionService _questionService)
 		{
             this._mapper = mapper;
+            this._questionService = _questionService;
             this._answerRepository = answerRepository;
             this._triviaRepository = triviaRepository;
             this._questionRepository = questionsRepository;
@@ -43,7 +44,7 @@ namespace team1_backend_csharp_quiz_api.Services
 
             if (value >= 5)
             {
-                return await _questionRepository.GetRandomAsync();
+                return await _questionService.RandomQuestionFromList();
             }
             else
             {

@@ -46,9 +46,9 @@ namespace team1backendcsharpquizapi.Migrations
                 columns: new[] { "Id", "Category", "Language", "QuestionString" },
                 values: new object[,]
                 {
-                    { new Guid("5a346a66-eeec-48f0-a1c8-e8a863374551"), "Film", "Swedish", "Fråga 2" },
-                    { new Guid("f4ddd58f-97b9-49b2-8617-07901860dd99"), "Sport", "Swedish", "Fråga 1" },
-                    { new Guid("f6609ae1-ddf3-4969-af45-aa80ebd3f30c"), "Serier", "Swedish", "Fråga 3" }
+                    { new Guid("21590e3e-fd77-4e89-9d4f-9bdda30562ba"), "Sport", "Swedish", "Fråga 1" },
+                    { new Guid("35caf2a0-6d4a-498f-8b10-b2fd8689c15d"), "Serier", "Swedish", "Fråga 3" },
+                    { new Guid("8d008fb4-ae8a-4318-a161-87bbc2e160e8"), "Film", "Swedish", "Fråga 2" }
                 });
         }
 

@@ -63,21 +63,21 @@ namespace team1backendcsharpquizapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eb11e3d2-a64f-43c3-bee8-12824d8e788c"),
+                            Id = new Guid("21590e3e-fd77-4e89-9d4f-9bdda30562ba"),
                             Category = "Sport",
                             Language = "Swedish",
                             QuestionString = "Fråga 1"
                         },
                         new
                         {
-                            Id = new Guid("e028a100-3497-405e-8943-a15c4b193b08"),
+                            Id = new Guid("8d008fb4-ae8a-4318-a161-87bbc2e160e8"),
                             Category = "Film",
                             Language = "Swedish",
                             QuestionString = "Fråga 2"
                         },
                         new
                         {
-                            Id = new Guid("cee56094-cea4-4d51-83bf-302a4ec3d41b"),
+                            Id = new Guid("35caf2a0-6d4a-498f-8b10-b2fd8689c15d"),
                             Category = "Serier",
                             Language = "Swedish",
                             QuestionString = "Fråga 3"
