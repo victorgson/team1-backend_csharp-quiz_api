@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.Build.Framework;
+using team1_backend_csharp_quiz_api.DTO.Question;
+
 namespace team1_backend_csharp_quiz_api.DTO
 {
-	public class CreateQuestionDto
+	public class CreateQuestionDto : BaseQuestionDto
 	{
-        [Required]
-        public string Language { get; set; }
-        public string QuestionString { get; set; }
-        public string Category { get; set; }
+       
     }
 }
 
