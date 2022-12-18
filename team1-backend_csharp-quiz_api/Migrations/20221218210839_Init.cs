@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace team1backendcsharpquizapi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace team1backendcsharpquizapi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    QuestionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AnswerString = table.Column<string>(type: "TEXT", nullable: false),
                     isCorrectAnswer = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -46,9 +46,9 @@ namespace team1backendcsharpquizapi.Migrations
                 columns: new[] { "Id", "Category", "Language", "QuestionString" },
                 values: new object[,]
                 {
-                    { new Guid("56cb2fee-2d13-44d1-aa22-f0fad00cf6ec"), "Sport", "Swedish", "Fråga 1" },
-                    { new Guid("91fa878b-7f43-4c0e-a036-f7b7b722a6ea"), "Film", "Swedish", "Fråga 2" },
-                    { new Guid("f444e689-344d-4237-9913-77aa17a75476"), "Serier", "Swedish", "Fråga 3" }
+                    { new Guid("002c58d4-e055-4947-9e1e-f8315540b2f9"), "Serier", "Swedish", "Fråga 3" },
+                    { new Guid("6b70ee6a-8f08-4296-8f04-e70c1bfa0382"), "Sport", "Swedish", "Fråga 1" },
+                    { new Guid("e7a64a3b-395c-4b47-960d-76c01e2a8a5a"), "Film", "Swedish", "Fråga 2" }
                 });
         }
 

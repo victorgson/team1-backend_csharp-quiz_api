@@ -14,7 +14,8 @@ namespace team1_backend_csharp_quiz_api.Services
         Task<Question> GetRandomQuestion();
         Task<bool> checkIfTriviaQuestionExistsInDb(Guid id);
         void saveTriviaQuestion(Question question);
-        void saveTriviaAnswers();
+        void saveCorrectTriviaAnswers(TriviaQuizQuestion question, Guid questionId);
+        void saveIncorrectTriviaAnswers(string incorrectAnswer, Guid questionId);
     }
 
 	public class TriviaService : ITriviaService
@@ -55,6 +56,12 @@ namespace team1_backend_csharp_quiz_api.Services
                 if(!await checkIfTriviaQuestionExistsInDb(record.Id))
                 {
                     saveTriviaQuestion(record);
+                    saveCorrectTriviaAnswers(question, record.Id);
+
+                    foreach (var item in question.incorrectAnswers)
+                    {
+                        saveIncorrectTriviaAnswers(item, record.Id);
+                    }
                 }
 
                 return record;
@@ -64,6 +71,7 @@ namespace team1_backend_csharp_quiz_api.Services
         public void saveTriviaQuestion(Question question)
         {
             _questionRepository.AddSync(question);
+            
         }
 
         public async Task<bool> checkIfTriviaQuestionExistsInDb(Guid id)
@@ -73,9 +81,24 @@ namespace team1_backend_csharp_quiz_api.Services
 
         }
 
-        public void saveTriviaAnswers()
+        public async void saveCorrectTriviaAnswers(TriviaQuizQuestion question, Guid questionId)
         {
-            throw new NotImplementedException();
+
+            Answer answer = new Answer();
+            answer.AnswerString = question.correctAnswer;
+            answer.isCorrectAnswer = true;
+            answer.QuestionId = questionId;
+            await _answerRepository.AddSync(answer);
+
+        }
+
+        public async void saveIncorrectTriviaAnswers(String incorrectAnswer, Guid questionId)
+        {
+            Answer answer = new Answer();
+            answer.AnswerString = incorrectAnswer;
+            answer.isCorrectAnswer = false;
+            answer.QuestionId = questionId;
+            await _answerRepository.AddSync(answer);
         }
     }
 }

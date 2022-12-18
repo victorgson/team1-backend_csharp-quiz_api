@@ -11,8 +11,8 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    [Migration("20221217145446_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221218210839_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,8 +30,8 @@ namespace team1backendcsharpquizapi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("isCorrectAnswer")
                         .HasColumnType("INTEGER");
@@ -66,21 +66,21 @@ namespace team1backendcsharpquizapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("56cb2fee-2d13-44d1-aa22-f0fad00cf6ec"),
+                            Id = new Guid("6b70ee6a-8f08-4296-8f04-e70c1bfa0382"),
                             Category = "Sport",
                             Language = "Swedish",
                             QuestionString = "Fråga 1"
                         },
                         new
                         {
-                            Id = new Guid("91fa878b-7f43-4c0e-a036-f7b7b722a6ea"),
+                            Id = new Guid("e7a64a3b-395c-4b47-960d-76c01e2a8a5a"),
                             Category = "Film",
                             Language = "Swedish",
                             QuestionString = "Fråga 2"
                         },
                         new
                         {
-                            Id = new Guid("f444e689-344d-4237-9913-77aa17a75476"),
+                            Id = new Guid("002c58d4-e055-4947-9e1e-f8315540b2f9"),
                             Category = "Serier",
                             Language = "Swedish",
                             QuestionString = "Fråga 3"
