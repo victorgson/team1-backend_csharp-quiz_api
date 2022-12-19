@@ -52,9 +52,9 @@ namespace team1backendcsharpquizapi.Migrations
                 columns: new[] { "Id", "Category", "Language", "QuestionString" },
                 values: new object[,]
                 {
-                    { new Guid("06472ffa-7fb1-42fa-8cc1-a9c886f150f9"), "Film", "Swedish", "Fråga 2" },
-                    { new Guid("229940ae-eb01-453a-8c87-f96b859d064f"), "Serier", "Swedish", "Fråga 3" },
-                    { new Guid("e976d209-eb08-4b45-b2fa-a69263b66c2c"), "Sport", "Swedish", "Fråga 1" }
+                    { new Guid("1f607ec9-99f9-46d9-9ca6-0cf7e647a3f4"), "Film", "Swedish", "Fråga 2" },
+                    { new Guid("3a57fe30-721e-4f61-83f6-92717ed55db9"), "Sport", "Swedish", "Fråga 1" },
+                    { new Guid("e372d4f0-075c-4e70-8be7-2dffeb95b633"), "Serier", "Swedish", "Fråga 3" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -4,6 +4,7 @@ using System.Net;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using team1_backend_csharp_quiz_api.Contracts;
+using team1_backend_csharp_quiz_api.Services;
 
 namespace team1_backend_csharp_quiz_api.V1;
 
@@ -12,17 +13,27 @@ namespace team1_backend_csharp_quiz_api.V1;
 [ApiExplorerSettings(GroupName = "v1")]
 public class TriviaQuizController : ControllerBase
 {
-    private readonly ITriviaQuizRepository _triviaQuizRepository;
+    private readonly ITriviaService _triviaService;
 
-    public TriviaQuizController(ITriviaQuizRepository triviaQuizRepository)
+
+    public TriviaQuizController(ITriviaService triviaService)
     {
-        _triviaQuizRepository = triviaQuizRepository;
+        _triviaService = triviaService;
+
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetQuestion()
     {
-        var quizQuestion = await _triviaQuizRepository.GetTriviaQuestion();
+        var quizQuestion = await _triviaService.getQuestion();
+
+        return Ok(quizQuestion);
+    }
+
+    [HttpGet("{id}, {answer}")]
+    public async Task<IActionResult> GetAnswer(Guid id, string answer)
+    {
+        var quizQuestion = _triviaService.checkAnswer(id, answer).Result;
 
         return Ok(quizQuestion);
     }

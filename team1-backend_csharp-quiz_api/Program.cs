@@ -114,11 +114,6 @@ internal class Program
                     options.SwaggerEndpoint("v1/swagger.json", "V1");
                     options.SwaggerEndpoint("v2/swagger.json", "V2");
 
-                    //custom css and html
-                    //options.InjectStylesheet("/swagger-ui/custom.css");
-                    //options.IndexStream = () => GetType().Assembly
-                    //    .GetManifestResourceStream("ITHS.Webapi.Swagger.index.html");
-
                 });
             }
 
@@ -130,17 +125,8 @@ internal class Program
             return app;
         }
 
-
-        // Lägg till DB context
-
         static void AddQuizDatabaseContext(WebApplicationBuilder builder)
         {
-
-
-            //var ConnectionString = builder.Configuration.GetConnectionString("ITHSDatabase");
-            //if (ConnectionString == null)
-            //    Console.WriteLine("no connectionString");
-            //else Console.WriteLine(ConnectionString);
 
             builder.Services​
             .AddDbContext<QuizDatabaseContext>(options =>

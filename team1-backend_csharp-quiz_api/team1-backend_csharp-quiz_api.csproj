@@ -52,6 +52,7 @@
     <None Remove="DTO\Question\" />
     <None Remove="DTO\Answer\" />
     <None Remove="Migrations\" />
+    <None Remove="DTO\Quiz\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -66,6 +67,7 @@
     <Folder Include="DTO\Question\" />
     <Folder Include="DTO\Answer\" />
     <Folder Include="Migrations\" />
+    <Folder Include="DTO\Quiz\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\AnswersController.cs" />

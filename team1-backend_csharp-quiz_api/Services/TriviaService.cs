@@ -5,18 +5,11 @@ using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.DTO;
 using team1_backend_csharp_quiz_api.DTO.Question;
 using team1_backend_csharp_quiz_api.Entities;
+using team1_backend_csharp_quiz_api.Repository;
 
 namespace team1_backend_csharp_quiz_api.Services
 {
 
-    public interface ITriviaService
-    {
-        Task<Question> GetRandomQuestion();
-        Task<bool> checkIfTriviaQuestionExistsInDb(Guid id);
-        void saveTriviaQuestion(Question question);
-        void saveCorrectTriviaAnswers(TriviaQuizQuestion question, Guid questionId);
-        void saveIncorrectTriviaAnswers(string incorrectAnswer, Guid questionId);
-    }
 
 	public class TriviaService : ITriviaService
 	{
@@ -98,6 +91,52 @@ namespace team1_backend_csharp_quiz_api.Services
             answer.isCorrectAnswer = false;
             answer.QuestionId = questionId;
             await _answerRepository.AddSync(answer);
+        }
+
+        public async Task<QuizGameQuestion> getQuestion()
+        {
+            var question = await GetRandomQuestion();
+            var answers = await _answerRepository.GetAllAsync();
+            var filteredAnswers = answers.FindAll(q => question.Id == q.QuestionId);
+
+
+            Random rng = new Random();
+            var shuffledListOfAnswers = filteredAnswers.OrderBy(a => rng.Next()).ToList();
+
+            QuizGameQuestion quizGameQuestion = new QuizGameQuestion();
+            quizGameQuestion.Id = question.Id;
+            quizGameQuestion.QuestionString = question.QuestionString;
+
+
+            foreach (var item in shuffledListOfAnswers)
+            {
+                quizGameQuestion.Answers.Add(item.AnswerString);
+            }
+
+            return quizGameQuestion;
+
+        }
+
+        public async Task<string> checkAnswer(Guid id, string answer)
+        {
+            var answers = await _answerRepository.GetAllAsync();
+            var filteredAnswers = answers.Find(q => answer == q.AnswerString);
+
+
+            if (filteredAnswers is null)
+            {
+                return "Answer does not exist";
+            }
+
+            if (filteredAnswers.isCorrectAnswer)
+            {
+                return filteredAnswers.AnswerString + " is correct";
+            }
+            else
+            {
+                return filteredAnswers.AnswerString + " is not correct!";
+            }
+
         }
     }
 }
