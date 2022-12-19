@@ -51,7 +51,6 @@
     <None Remove="Configurations\" />
     <None Remove="DTO\Question\" />
     <None Remove="DTO\Answer\" />
-    <None Remove="Migrations\" />
     <None Remove="DTO\Quiz\" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +65,6 @@
     <Folder Include="Configurations\" />
     <Folder Include="DTO\Question\" />
     <Folder Include="DTO\Answer\" />
-    <Folder Include="Migrations\" />
     <Folder Include="DTO\Quiz\" />
   </ItemGroup>
   <ItemGroup>

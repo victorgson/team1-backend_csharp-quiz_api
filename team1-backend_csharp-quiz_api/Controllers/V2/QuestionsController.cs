@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.Entities;
 using team1_backend_csharp_quiz_api.Persistance;
-using team1_backend_csharp_quiz_api.Repository;
-using AutoMapper;
 using team1_backend_csharp_quiz_api.DTO;
 using team1_backend_csharp_quiz_api.DTO.Question;
 using team1_backend_csharp_quiz_api.Services;
@@ -22,43 +20,30 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
 
     public class QuestionsController : ControllerBase
     {
-        private readonly IQuestionsRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly ITriviaService _service;
+ 
+        private readonly ITriviaService _triviaService;
+        private readonly IQuestionService _questionService;
 
-        public QuestionsController(IQuestionsRepository repository, IMapper mapper, ITriviaService service)
+        public QuestionsController(ITriviaService triviaService, IQuestionService questionService)
         {
-            this._service = service;
-            _repository = repository;
-            this._mapper = mapper;
+            this._triviaService = triviaService;
+            this._questionService = questionService;
+
         }
 
         // GET: api/Questions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetQuestionDto>>> GetQuestions()
-        {
-
-            var questions = await _repository.GetAllAsync();
-            var records = _mapper.Map<List<GetQuestionDto>>(questions);
-
-            return Ok(records);
-        }
+        public async Task<ActionResult<IEnumerable<GetQuestionDto>>> GetQuestions() => Ok(await _questionService.GetQuestionsList());
 
         //GET: api/Questions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Question>> GetQuestion(Guid id)
+        public async Task<ActionResult<GetQuestionDto>> GetQuestion(Guid id)
         {
 
+            var question = await _questionService.GetQuestion(id);
 
-            var question = await _repository.GetAsync(id);
+            return (question != null ? Ok(question) : NotFound());
 
-
-            if (question is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(question);
         }
 
         // GET: api/Questions/
@@ -66,13 +51,10 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [Route("/api/v1/Questions/Random")]
         public async Task<ActionResult<Question>> GetRandomQuestion()
         {
-            var question = await _service.GetRandomQuestion();
+            var question = await _triviaService.GetRandomQuestion();
 
-            if (question is null)
-            {
-                return NotFound();
-            }
-            return Ok(question);
+            return (question is null ? NotFound() : Ok(question));
+
         }
 
         // PUT: api/Questions/5
@@ -85,16 +67,9 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
                 return BadRequest();
             }
 
-            var question = await _repository.GetAsync(id);
-
-            if (question is null)
-            {
-                return NotFound(); 
-            }
-            _mapper.Map(questionDto, question);
             try
             {
-                await _repository.UpdateAsync(question);
+                await _questionService.UpdateQuestion(id, questionDto);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -117,8 +92,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         public async Task<ActionResult<Question>> PostQuestion(CreateQuestionDto createQuestionDto)
         {
 
-            var question = _mapper.Map<Question>(createQuestionDto);
-            await _repository.AddSync(question);
+            var question = await _questionService.AddQuestion(createQuestionDto);
 
             return CreatedAtAction("GetQuestion", new { id = question.Id }, question);
         }
@@ -128,23 +102,17 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         public async Task<IActionResult> DeleteQuestion(Guid id)
         {
 
-            var question = await _repository.GetAsync(id);
-            if (question is null)
-            {
-                return NotFound(); 
-            }
+            var success = await _questionService.RemoveQuestion(id);
 
-            await _repository.DeleteAsync(id);
-
-
-            return NoContent(); 
+            return (success ? NoContent() : BadRequest("Question ID was not found."));
 
 
         }
 
         private async Task<bool> QuestionExists(Guid id)
         {
-            return await _repository.Exists(id);
+            return await _questionService.QuestionExists(id);
+
         }
     }
 }
