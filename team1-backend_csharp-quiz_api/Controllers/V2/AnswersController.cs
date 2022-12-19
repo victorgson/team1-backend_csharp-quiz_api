@@ -16,8 +16,8 @@ using team1_backend_csharp_quiz_api.Services;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
-    [Route("api/v1/[controller]")]
-    [ApiExplorerSettings(GroupName = "v1")]
+    [Route("api/v2/[controller]")]
+    [ApiExplorerSettings(GroupName = "v2")]
     [ApiController]
     public class AnswersController : ControllerBase
     {

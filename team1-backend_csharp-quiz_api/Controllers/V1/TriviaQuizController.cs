@@ -13,17 +13,19 @@ namespace team1_backend_csharp_quiz_api.V1;
 [ApiExplorerSettings(GroupName = "v1")]
 public class TriviaQuizController : ControllerBase
 {
-    private readonly IQuizGameService _quizGameService;
+    private readonly ITriviaService _triviaService;
 
-    public TriviaQuizController(IQuizGameService quizGameService)
+
+    public TriviaQuizController(ITriviaService triviaService)
     {
-        _quizGameService = quizGameService;
+        _triviaService = triviaService;
+
     }
 
     [HttpGet]
     public async Task<IActionResult> GetQuestion()
     {
-        var quizQuestion = await _quizGameService.getQuestion();
+        var quizQuestion = await _triviaService.getQuestion();
 
         return Ok(quizQuestion);
     }
@@ -31,7 +33,7 @@ public class TriviaQuizController : ControllerBase
     [HttpGet("{id}, {answer}")]
     public async Task<IActionResult> GetAnswer(Guid id, string answer)
     {
-        var quizQuestion = _quizGameService.checkAnswer(id, answer).Result;
+        var quizQuestion = _triviaService.checkAnswer(id, answer).Result;
 
         return Ok(quizQuestion);
     }
