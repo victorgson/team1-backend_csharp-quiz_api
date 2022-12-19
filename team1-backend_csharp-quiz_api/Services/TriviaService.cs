@@ -11,7 +11,7 @@ namespace team1_backend_csharp_quiz_api.Services
 
     public interface ITriviaService
     {
-        Task<Question> GetRandomQuestion();
+        Task<GetQuestionDto> GetRandomQuestion();
         Task<bool> checkIfTriviaQuestionExistsInDb(Guid id);
         void saveTriviaQuestion(Question question);
         void saveCorrectTriviaAnswers(TriviaQuizQuestion question, Guid questionId);
@@ -37,7 +37,7 @@ namespace team1_backend_csharp_quiz_api.Services
 
         }
 
-        public async Task<Question> GetRandomQuestion()
+        public async Task<GetQuestionDto> GetRandomQuestion()
         {
             Random r = new Random();
             // Vet inte varför 0, 1 inte funkar, så kör på detta
@@ -50,8 +50,9 @@ namespace team1_backend_csharp_quiz_api.Services
             else
             {
 
-                var question = await _triviaRepository.GetTriviaQuestion();
-                var record = _mapper.Map<Question>(question);
+                var question = await _triviaRepository.GetTriviaQuestion(); 
+                var record = _mapper.Map<Question>(question); 
+                var questionDto = _mapper.Map<GetQuestionDto>(record); 
 
                 if(!await checkIfTriviaQuestionExistsInDb(record.Id))
                 {
@@ -64,7 +65,7 @@ namespace team1_backend_csharp_quiz_api.Services
                     }
                 }
 
-                return record;
+                return questionDto;
             }
         }
 

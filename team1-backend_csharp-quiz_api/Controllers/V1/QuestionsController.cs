@@ -24,55 +24,40 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     {
         private readonly IQuestionsRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ITriviaService _service;
+        private readonly ITriviaService _triviaService;
+        private readonly IQuestionService _questionService;
 
-        public QuestionsController(IQuestionsRepository repository, IMapper mapper, ITriviaService service)
+        public QuestionsController(IQuestionsRepository repository, IMapper mapper, ITriviaService triviaService, IQuestionService questionService)
         {
-            this._service = service;
+            this._triviaService = triviaService;
             _repository = repository;
             this._mapper = mapper;
+            this._questionService = questionService;
         }
 
         // GET: api/Questions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetQuestionDto>>> GetQuestions()
-        {
-
-            var questions = await _repository.GetAllAsync();
-            var records = _mapper.Map<List<GetQuestionDto>>(questions);
-
-            return Ok(records);
-        }
+        public async Task<ActionResult<IEnumerable<GetQuestionDto>>> GetQuestions() => Ok(await _questionService.GetQuestionsList());
 
         //GET: api/Questions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Question>> GetQuestion(Guid id)
+        public async Task<ActionResult<GetQuestionDto>> GetQuestion(Guid id)
         {
 
+            var question = await _questionService.GetQuestion(id);
 
-            var question = await _repository.GetAsync(id);
+            return (question != null ? Ok(question) : NotFound());
 
-
-            if (question is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(question);
         }
 
         // GET: api/Questions/
         [HttpGet]
         [Route("/api/v1/Questions/Random")]
-        public async Task<ActionResult<Question>> GetRandomQuestion()
+        public async Task<ActionResult<GetQuestionDto>> GetRandomQuestion()
         {
-            var question = await _service.GetRandomQuestion();
+            var question = await _triviaService.GetRandomQuestion();
 
-            if (question is null)
-            {
-                return NotFound();
-            }
-            return Ok(question);
+            return (question != null ? Ok(question) : NotFound());
         }
 
         // PUT: api/Questions/5
@@ -80,6 +65,8 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpPut("{id}")]
         public async Task<IActionResult> PutQuestion(Guid id, UpdateQuestionDto questionDto)
         {
+
+
             if (id != questionDto.Id)
             {
                 return BadRequest();
@@ -89,7 +76,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
 
             if (question is null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             _mapper.Map(questionDto, question);
             try
@@ -98,7 +85,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (! await QuestionExists(id))
+                if (!await QuestionExists(id))
                 {
                     return NotFound();
                 }

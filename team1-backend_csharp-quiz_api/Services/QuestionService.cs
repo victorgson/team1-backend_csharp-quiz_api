@@ -1,7 +1,13 @@
 ﻿using System;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using team1_backend_csharp_quiz_api.Contracts;
+using team1_backend_csharp_quiz_api.DTO.Question;
 using team1_backend_csharp_quiz_api.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using team1_backend_csharp_quiz_api.DTO;
 
 namespace team1_backend_csharp_quiz_api.Services
 {
@@ -9,13 +15,15 @@ namespace team1_backend_csharp_quiz_api.Services
     {
 
         public IQuestionsRepository _repository;
+        private readonly IMapper _mapper;
 
-        public QuestionService(IQuestionsRepository repository)
+        public QuestionService(IQuestionsRepository repository, IMapper mapper)
         {
             _repository = repository;
+            this._mapper = mapper;
         }
 
-        public async Task<Question> RandomQuestionFromList()
+        public async Task<GetQuestionDto> RandomQuestionFromList()
         {
             Random r = new Random();
 
@@ -23,9 +31,39 @@ namespace team1_backend_csharp_quiz_api.Services
 
             var question = allQuestions.ElementAt(r.Next(0, allQuestions.Count));
 
-            return question;
+            var questionDto = _mapper.Map<GetQuestionDto>(question);
+
+            return questionDto;
         }
 
+        public async Task<List<GetQuestionDto>> GetQuestionsList()
+        {
+            var questions = await _repository.GetAllAsync();
+            var questionsList = _mapper.Map<List<GetQuestionDto>>(questions);
 
+            return questionsList;
+
+        }
+
+        public async Task<GetQuestionDto> GetQuestion(Guid id)
+        {
+            var question = await _repository.GetAsync(id);
+            var questionDto = _mapper.Map<GetQuestionDto>(question);
+
+            return questionDto;
+
+        }
+
+        //public async Task<CreateQuestionDto> AddQuestion(CreateQuestionDto createQuestionDto)
+        //{
+        //    var question = _mapper.Map<Question>(createQuestionDto);
+        //    await _repository.AddSync(question);
+        //    return question;
+        //}
+
+        //public async Task<IActionResult> ChangeQuestion(Guid id, UpdateQuestionDto questionDto)
+        //{
+
+        //}
     }
 }
