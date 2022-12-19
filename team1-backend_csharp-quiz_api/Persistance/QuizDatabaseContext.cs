@@ -66,10 +66,9 @@ namespace team1_backend_csharp_quiz_api.Persistance
                 //    )
 
 
-                //entity.HasKey(e => e.Id);
-                //entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                ////entity.Property(e => e.QuestionId).IsRequired();
-                //entity.HasOne<Question>().WithOne().HasForeignKey(p => p);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.HasOne<Question>().WithMany().HasForeignKey(q => q.QuestionId);
 
 
 

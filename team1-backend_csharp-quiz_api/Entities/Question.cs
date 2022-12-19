@@ -17,6 +17,7 @@ namespace team1_backend_csharp_quiz_api.Entities
         {
             Id = Guid.NewGuid();
         }
+
     }
 }
 

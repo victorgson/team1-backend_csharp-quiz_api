@@ -83,7 +83,6 @@ namespace team1_backend_csharp_quiz_api.Services
 
         public async void saveCorrectTriviaAnswers(TriviaQuizQuestion question, Guid questionId)
         {
-
             Answer answer = new Answer();
             answer.AnswerString = question.correctAnswer;
             answer.isCorrectAnswer = true;

@@ -35,6 +35,8 @@ namespace team1backendcsharpquizapi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("QuestionId");
+
                     b.ToTable("Answers");
                 });
 
@@ -63,25 +65,34 @@ namespace team1backendcsharpquizapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6b70ee6a-8f08-4296-8f04-e70c1bfa0382"),
+                            Id = new Guid("e976d209-eb08-4b45-b2fa-a69263b66c2c"),
                             Category = "Sport",
                             Language = "Swedish",
                             QuestionString = "Fråga 1"
                         },
                         new
                         {
-                            Id = new Guid("e7a64a3b-395c-4b47-960d-76c01e2a8a5a"),
+                            Id = new Guid("06472ffa-7fb1-42fa-8cc1-a9c886f150f9"),
                             Category = "Film",
                             Language = "Swedish",
                             QuestionString = "Fråga 2"
                         },
                         new
                         {
-                            Id = new Guid("002c58d4-e055-4947-9e1e-f8315540b2f9"),
+                            Id = new Guid("229940ae-eb01-453a-8c87-f96b859d064f"),
                             Category = "Serier",
                             Language = "Swedish",
                             QuestionString = "Fråga 3"
                         });
+                });
+
+            modelBuilder.Entity("team1_backend_csharp_quiz_api.Entities.Answer", b =>
+                {
+                    b.HasOne("team1_backend_csharp_quiz_api.Entities.Question", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
