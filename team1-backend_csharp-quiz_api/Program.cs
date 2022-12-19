@@ -35,6 +35,7 @@ internal class Program
         builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
         builder.Services.AddScoped<ITriviaService, TriviaService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
+        builder.Services.AddScoped<IAnswerService, AnswerService>();
 
 
         //// Configure the HTTP request pipeline.

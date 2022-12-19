@@ -13,6 +13,7 @@ using team1_backend_csharp_quiz_api.Repository;
 using team1_backend_csharp_quiz_api.Contracts;
 using team1_backend_csharp_quiz_api.DTO.Question;
 using team1_backend_csharp_quiz_api.Services;
+using team1_backend_csharp_quiz_api.DTO;
 
 namespace team1_backend_csharp_quiz_api.Controllers.V1
 {
@@ -21,39 +22,25 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
     [ApiController]
     public class AnswersController : ControllerBase
     {
-     
-        private readonly IMapper _mapper;
-        private readonly IAnswersRepository _repository;
+        private readonly IAnswerService _answerService;
 
-        public AnswersController(IMapper mapper, IAnswersRepository repository)
+
+        public AnswersController(IMapper mapper, IAnswersRepository repository, IAnswerService answerService)
         {
-            this._mapper = mapper;
-            this._repository = repository;
+            _answerService = answerService;
         }
 
         // GET: api/Answers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers()
-        {
-
-            var answers = await _repository.GetAllAsync();
-            var records = _mapper.Map<List<GetAnswerDto>>(answers);
-
-            return Ok(records);
-        }
+        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers() => Ok(await _answerService.GetAnswersList());
 
         // GET: api/Answers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Answer>> GetAnswer(Guid id)
         {
-            var answer = await _repository.GetAsync(id);
+            var answer = await _answerService.GetAnswer(id);
 
-            if (answer is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(answer);
+            return (answer != null ? Ok(answer) : NotFound());
         }
 
         // PUT: api/Answers/5
@@ -66,16 +53,9 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
                 return BadRequest();
             }
 
-            var question = await _repository.GetAsync(id);
-
-            if (question is null)
-            {
-                return NotFound();
-            }
-            _mapper.Map(answerDto, question);
             try
             {
-                await _repository.UpdateAsync(question);
+                await _answerService.UpdateAnswer(id, answerDto);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -97,8 +77,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<Answer>> PostAnswer(CreateAnswerDto createAnswerDto)
         {
-            var answer = _mapper.Map<Answer>(createAnswerDto);
-            await _repository.AddSync(answer);
+            var answer = await _answerService.AddAnswer(createAnswerDto);
 
             return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
         }
@@ -107,21 +86,14 @@ namespace team1_backend_csharp_quiz_api.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(Guid id)
         {
-            var answer = await _repository.GetAsync(id);
-            if (answer is null)
-            {
-                return NotFound();
-            }
+            var success = await _answerService.RemoveAnswer(id);
 
-            await _repository.DeleteAsync(id);
-
-
-            return NoContent();
+            return (success ? NoContent() : BadRequest("Answer ID was not found."));
         }
 
         private async Task<bool> AnswerExists(Guid id)
         {
-            return await _repository.Exists(id);
+            return await _answerService.AnswerExists(id);
         }
     }
 }
