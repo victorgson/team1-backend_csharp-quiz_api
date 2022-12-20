@@ -38,8 +38,8 @@ public class TriviaQuizController : ControllerBase
     /// <summary>
     /// Checks if the answer is correct. Enter ID of question and your desired answer.
     /// </summary>
-    [HttpGet("{id}-{answer}")]
-    public async Task<ActionResult<string>> GetAnswer(Guid id, string answer)
+    [HttpPost("{id}-{answer}")]
+    public async Task<ActionResult<string>> PostAnswer(Guid id, string answer)
     {
 
         var quizQuestion = _triviaService.checkAnswer(id, answer).Result;
