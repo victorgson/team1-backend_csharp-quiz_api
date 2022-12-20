@@ -16,6 +16,7 @@ using team1_backend_csharp_quiz_api.Configurations;
 using team1_backend_csharp_quiz_api.Services;
 using team1_backend_csharp_quiz_api.Swagger;
 
+
 internal class Program
 {
     private static void Main(string[] args)
