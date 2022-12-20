@@ -12,7 +12,7 @@ using team1_backend_csharp_quiz_api.DTO;
 using team1_backend_csharp_quiz_api.DTO.Question;
 using team1_backend_csharp_quiz_api.Services;
 
-namespace team1_backend_csharp_quiz_api.Controllers.V1
+namespace team1_backend_csharp_quiz_api.Controllers.V2
 {
     [Route("api/v2/[controller]")]
     [ApiExplorerSettings(GroupName = "v2")]

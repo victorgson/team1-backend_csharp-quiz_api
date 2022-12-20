@@ -16,7 +16,8 @@ namespace team1_backend_csharp_quiz_api.Configurations
                 .AddScoped<IQuestionsRepository, QuestionsRepository>()
                 .AddScoped<IAnswersRepository, AnswersRepository>()
                 .AddScoped<ITriviaService, TriviaService>()
-                .AddScoped<IQuestionService, QuestionService>();
+                .AddScoped<IQuestionService, QuestionService>()
+                .AddScoped<IAnswerService, AnswerService>();
         }
     }
 }

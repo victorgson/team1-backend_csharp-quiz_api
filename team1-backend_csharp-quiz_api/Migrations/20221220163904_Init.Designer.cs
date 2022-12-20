@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using team1_backend_csharp_quiz_api.Persistance;
 
@@ -10,9 +11,11 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    partial class QuizDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221220163904_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -65,21 +68,21 @@ namespace team1backendcsharpquizapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2191114c-7a5f-4d9b-bd1d-f8210b14eb9a"),
+                            Id = new Guid("3e8344ea-7870-49ff-a6b8-9e276372df5b"),
                             Category = "Sport",
                             Language = "Swedish",
                             QuestionString = "Fråga 1"
                         },
                         new
                         {
-                            Id = new Guid("38c90721-02f1-4e13-99ca-b421d8e7a7b7"),
+                            Id = new Guid("d2361a9c-cab7-404d-9a5c-2a6bff5c311e"),
                             Category = "Film",
                             Language = "Swedish",
                             QuestionString = "Fråga 2"
                         },
                         new
                         {
-                            Id = new Guid("650d2502-c787-4347-9db0-469be0b291bd"),
+                            Id = new Guid("fb5127f1-8db8-4b71-9a59-b91c8e795633"),
                             Category = "Serier",
                             Language = "Swedish",
                             QuestionString = "Fråga 3"
