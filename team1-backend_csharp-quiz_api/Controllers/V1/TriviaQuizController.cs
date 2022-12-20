@@ -38,7 +38,7 @@ public class TriviaQuizController : ControllerBase
     /// <summary>
     /// Checks if the answer is correct. Enter ID of question and your desired answer.
     /// </summary>
-    [HttpGet("{id}, {answer}")]
+    [HttpGet("{id}-{answer}")]
     public async Task<ActionResult<string>> GetAnswer(Guid id, string answer)
     {
 

@@ -22,7 +22,7 @@ internal class Program
     private static void Main(string[] args)
     {
 
-      
+
         var builder = WebApplication.CreateBuilder(args);
         var config = builder.Configuration;
 
@@ -38,6 +38,21 @@ internal class Program
         builder.Services.AddResponseCompression();
         builder.Services.AddAutoMapper(typeof(MapperConfig));
 
+
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                builder =>
+                {
+
+                    //you can configure your custom policy
+                    builder.AllowAnyOrigin()
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+        });
+
         RunWebApplication(builder);
 
         static void RunWebApplication(WebApplicationBuilder builder)
@@ -49,6 +64,7 @@ internal class Program
             app.UseRouting();
             app.UseStaticFiles();
             app.MapControllers();
+            app.UseCors();
             app.Run();
         };
 
