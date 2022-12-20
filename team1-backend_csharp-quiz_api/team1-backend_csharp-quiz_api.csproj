@@ -57,6 +57,7 @@
     <None Remove="Application\Services\" />
     <None Remove="Application\ViewModels\" />
     <None Remove="Infrastructure\Clients\" />
+    <None Remove="Diagrams\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\V1\" />
@@ -72,6 +73,7 @@
     <Folder Include="Application\Services\" />
     <Folder Include="Application\ViewModels\" />
     <Folder Include="Infrastructure\Clients\" />
+    <Folder Include="Diagrams\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\AnswersController.cs" />
