@@ -51,7 +51,6 @@
     <None Remove="Configurations\" />
     <None Remove="DTO\Question\" />
     <None Remove="DTO\Answer\" />
-    <None Remove="Migrations\" />
     <None Remove="DTO\Quiz\" />
   </ItemGroup>
   <ItemGroup>
@@ -62,12 +61,11 @@
     <Folder Include="Services\" />
     <Folder Include="Repository\" />
     <Folder Include="Contracts\" />
-    <Folder Include="DTO\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="Configurations\" />
-    <Folder Include="DTO\Question\" />
-    <Folder Include="DTO\Answer\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="DTO\Quiz\" />
+    <Folder Include="ViewModels\Question\" />
+    <Folder Include="ViewModels\Answer\" />
+    <Folder Include="ViewModels\Quiz\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\AnswersController.cs" />

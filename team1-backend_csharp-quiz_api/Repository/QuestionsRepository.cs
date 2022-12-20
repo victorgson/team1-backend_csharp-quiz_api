@@ -14,13 +14,6 @@ namespace team1_backend_csharp_quiz_api.Repository
             this._context = context;
         }
 
-        public async Task<Question> GetRandomAsync()
-        {
-            Random r = new Random();
-            var tableToList = _context.Questions.ToList();
-            var question = tableToList.ElementAt(r.Next(0, tableToList.Count()));
-            return question; 
-        }
 
         public async Task<List<Question>> GetAllQuestions()
         {

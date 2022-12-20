@@ -11,8 +11,8 @@ using team1_backend_csharp_quiz_api.Persistance;
 namespace team1backendcsharpquizapi.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    [Migration("20221219134225_Init")]
-    partial class Init
+    [Migration("20221219221413_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,21 +68,21 @@ namespace team1backendcsharpquizapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a57fe30-721e-4f61-83f6-92717ed55db9"),
+                            Id = new Guid("9b4c2692-6c20-477a-b7a0-3e30ffbeaf11"),
                             Category = "Sport",
                             Language = "Swedish",
                             QuestionString = "Fråga 1"
                         },
                         new
                         {
-                            Id = new Guid("1f607ec9-99f9-46d9-9ca6-0cf7e647a3f4"),
+                            Id = new Guid("7f0322c9-0193-4999-a92b-e574ebbb17bf"),
                             Category = "Film",
                             Language = "Swedish",
                             QuestionString = "Fråga 2"
                         },
                         new
                         {
-                            Id = new Guid("e372d4f0-075c-4e70-8be7-2dffeb95b633"),
+                            Id = new Guid("1003a172-a4e1-4041-bb65-46be0e55c8b8"),
                             Category = "Serier",
                             Language = "Swedish",
                             QuestionString = "Fråga 3"
