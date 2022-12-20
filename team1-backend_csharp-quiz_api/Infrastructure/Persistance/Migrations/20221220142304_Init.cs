@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace team1backendcsharpquizapi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,9 +52,9 @@ namespace team1backendcsharpquizapi.Migrations
                 columns: new[] { "Id", "Category", "Language", "QuestionString" },
                 values: new object[,]
                 {
-                    { new Guid("1003a172-a4e1-4041-bb65-46be0e55c8b8"), "Serier", "Swedish", "Fråga 3" },
-                    { new Guid("7f0322c9-0193-4999-a92b-e574ebbb17bf"), "Film", "Swedish", "Fråga 2" },
-                    { new Guid("9b4c2692-6c20-477a-b7a0-3e30ffbeaf11"), "Sport", "Swedish", "Fråga 1" }
+                    { new Guid("2191114c-7a5f-4d9b-bd1d-f8210b14eb9a"), "Sport", "Swedish", "Fråga 1" },
+                    { new Guid("38c90721-02f1-4e13-99ca-b421d8e7a7b7"), "Film", "Swedish", "Fråga 2" },
+                    { new Guid("650d2502-c787-4347-9db0-469be0b291bd"), "Serier", "Swedish", "Fråga 3" }
                 });
 
             migrationBuilder.CreateIndex(
