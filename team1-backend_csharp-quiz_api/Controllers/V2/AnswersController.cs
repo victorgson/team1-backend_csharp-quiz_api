@@ -41,6 +41,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V2
         /// <summary>
         /// Gets one answer with specified Guid ID
         /// </summary>
+        /// <param name="id"> ID of the answer to get.</param>
         [HttpGet("{id}")]
         public async Task<ActionResult<Answer>> GetAnswer(Guid id)
         {
@@ -53,6 +54,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V2
         /// <summary>
         /// Updates answer with specified Guid Id. Include same Id in body also, they must match.
         /// </summary>
+        /// <param name="id"> ID of the answer to update.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAnswer(Guid id, UpdateAnswerDto answerDto)
         {
@@ -96,6 +98,7 @@ namespace team1_backend_csharp_quiz_api.Controllers.V2
         /// <summary>
         /// Deletes answer with specified Guid Id.
         /// </summary>
+        /// <param name="id"> ID of the answer to delete.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(Guid id)
         {
