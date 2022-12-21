@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Infrastructure</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Persistance\" />
+    <None Remove="Configurations\" />
+    <None Remove="Persistance\Migrations\" />
+    <None Remove="Contexts\" />
+    <None Remove="Contexts\Question\" />
+    <None Remove="Contexts\Answer\" />
+    <None Remove="Contexts\Trivia\" />
+    <None Remove="Contexts\Generic\" />
+    <None Remove="Clients\" />
+    <None Remove="Clients\Http\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Persistance\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="Persistance\Migrations\" />
+    <Folder Include="Contexts\" />
+    <Folder Include="Contexts\Question\" />
+    <Folder Include="Contexts\Answer\" />
+    <Folder Include="Contexts\Trivia\" />
+    <Folder Include="Contexts\Generic\" />
+    <Folder Include="Clients\" />
+    <Folder Include="Clients\Http\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Application\Quiz.Application.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

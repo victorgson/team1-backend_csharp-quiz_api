@@ -38,6 +38,8 @@ public class TriviaQuizController : ControllerBase
     /// <summary>
     /// Checks if the answer is correct. Enter ID of question and your desired answer.
     /// </summary>
+    /// <param name="id"> The ID of the question. </param>
+    /// <param name="answer"> The answer in text, needs to be exact to the answer in the array. </param>
     [HttpPost("{id}-{answer}")]
     public async Task<ActionResult<string>> PostAnswer(Guid id, string answer)
     {
