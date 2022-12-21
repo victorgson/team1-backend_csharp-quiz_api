@@ -11,6 +11,8 @@
 6. Run `dotnet ef database update` to create database.(if it doesn't exist, should be a file named quiz.db)
 7. Run project, Swagger will launch in browser.
 
+Diagrams and Individual Reports are in Misc-folder. 
+
 ## FRONTEND ##
 Install our simple react app to play the game. 
 https://github.com/victorgson/quizgame
