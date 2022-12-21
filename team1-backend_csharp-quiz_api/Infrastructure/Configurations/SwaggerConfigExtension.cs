@@ -27,8 +27,7 @@ public static class SwaggerConfigExtension
             options.SwaggerDoc("v1", V1);
             options.SwaggerDoc("v2", V2);
 
-            //Fixa varför den inte hittar XML
-            //options.IncludeXmlComments(PathToXMLComments);
+            options.IncludeXmlComments(PathToXMLComments);
 
         });
 

@@ -25,7 +25,7 @@ public class TriviaQuizController : ControllerBase
     }
 
     /// <summary>
-    /// Gets a random question
+    /// Gets a random question from Database or TriviaQuiz, 50/50
     /// </summary>
     [HttpGet]
     public async Task<ActionResult<QuizGameQuestion>> GetQuestion()
